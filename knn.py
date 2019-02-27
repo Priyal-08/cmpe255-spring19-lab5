@@ -20,6 +20,16 @@ def majority_vote(labels):
         return majority_vote(labels[:-1])  # try again without the farthest
 
 
+def knn_scikit(k, labeled_points, new_point):
+    from sklearn.neighbors import KNeighborsClassifier
+    kn_clf = KNeighborsClassifier(n_neighbors=k)
+    X = [[city[0][0], city[0][1]] for city in labeled_points]
+    y = [city[1] for city in labeled_points]
+    kn_clf.fit(X, y)
+    y_pred = kn_clf.predict([[new_point[0], new_point[1]]])
+    return y_pred
+
+
 def knn_classify(k, labeled_points, new_point):
     """each labeled point should be a pair (point, label)"""
 
@@ -37,7 +47,7 @@ def knn_classify(k, labeled_points, new_point):
 def predict_preferred_language_by_city(k_values, cities):
     """
     TODO
-    predicts a preferred programming language for each city using above knn_classify() and 
+    predicts a preferred programming language for each city using above knn_classify() and
     counts if predicted language matches the actual language.
     Finally, print number of correct for each k value using this:
     print(k, "neighbor[s]:", num_correct, "correct out of", len(cities))
@@ -48,7 +58,8 @@ def predict_preferred_language_by_city(k_values, cities):
         for i in range(len(cities)):
             cities_list = cities.copy()
             del cities_list[i]
-            pred = knn_classify(k, cities_list, cities[i][0])
+            # pred = knn_classify(k, cities_list, cities[i][0])
+            pred = knn_scikit(k, cities_list, cities[i][0])
             if(pred == cities[i][1]):
                 num_correct += 1
         print(k, "neighbor[s]:", num_correct, "correct out of", len(cities))
