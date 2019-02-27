@@ -1,0 +1,6 @@
+
+.DS_Store
+__pycache__/data.cpython-37.pyc
+__pycache__/knn.cpython-37.pyc
+__pycache__/linear_algebra.cpython-37.pyc
+screenshots/.DS_Store
