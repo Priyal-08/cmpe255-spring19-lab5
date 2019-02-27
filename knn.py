@@ -53,12 +53,24 @@ def predict_preferred_language_by_city(k_values, cities):
     print(k, "neighbor[s]:", num_correct, "correct out of", len(cities))
     """
     num_correct = 0
+    print("Classification: ")
     for k in k_values:
         num_correct = 0
         for i in range(len(cities)):
             cities_list = cities.copy()
             del cities_list[i]
-            # pred = knn_classify(k, cities_list, cities[i][0])
+            pred = knn_classify(k, cities_list, cities[i][0])
+            # pred = knn_scikit(k, cities_list, cities[i][0])
+            if(pred == cities[i][1]):
+                num_correct += 1
+        print(k, "neighbor[s]:", num_correct, "correct out of", len(cities))
+
+    print("Classification using scikit: ")
+    for k in k_values:
+        num_correct = 0
+        for i in range(len(cities)):
+            cities_list = cities.copy()
+            del cities_list[i]
             pred = knn_scikit(k, cities_list, cities[i][0])
             if(pred == cities[i][1]):
                 num_correct += 1
